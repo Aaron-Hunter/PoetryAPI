@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PoetryAPI.Services;
+using PoetryAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,12 +23,12 @@ namespace PoetryAPI.Controllers
 
         // GET: <PoemController>
         /// <summary>
-        /// Generates a random number
+        /// Gets the title, author and lines of all poems matching the given title
         /// </summary>
-        /// <returns>A random number</returns>
+        /// <returns>A string containing title, author, and lines of matching poems</returns>
         [HttpGet("{title}")]
         [ProducesResponseType(200)]
-        public async Task<IActionResult> GetTitle(string title)
+        public async Task<IActionResult> GetByTitle(string title)
         {
             string titlePath = "/title/" + title + "/title,author,lines";
             var res = await _httpClient.GetAsync(titlePath);
@@ -34,22 +36,46 @@ namespace PoetryAPI.Controllers
             return Ok(content);
         }
 
+        [HttpGet]
+        [ProducesResponseType(200)]
+        public ActionResult<List<Poem>> GetAll() => PoemService.GetAll();
+
         // POST <PoemController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Create(Poem poem)
         {
+            PoemService.Add(poem);
+            return CreatedAtAction(nameof(Create), new { id = poem.Id }, poem);
         }
 
         // PUT <PoemController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Update(int id, Poem poem)
         {
+            if (id != poem.Id)
+                return BadRequest();
+
+            var existingPoem = PoemService.Get(id);
+            if (existingPoem is null)
+                return NotFound();
+
+            PoemService.Update(poem);
+
+            return NoContent();
         }
 
         // DELETE <PoemController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var poem = PoemService.Get(id);
+
+            if (poem is null)
+                return NotFound();
+
+            PoemService.Delete(id);
+
+            return NoContent();
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using PoetryAPI.Services;
 using PoetryAPI.Models;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,15 +12,11 @@ namespace PoetryAPI.Controllers
     [ApiController]
     public class PoemController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
+        private PoetryService _poetryService;
         /// <summary />
         public PoemController(IHttpClientFactory clientFactory)
         {
-            if (clientFactory is null)
-            {
-                throw new ArgumentNullException(nameof(clientFactory));
-            }
-            _httpClient = clientFactory.CreateClient("poetry");
+            _poetryService = new PoetryService(clientFactory);
         }
 
         // GET: <PoemController>
@@ -30,22 +28,22 @@ namespace PoetryAPI.Controllers
         [ProducesResponseType(200)]
         public async Task<IActionResult> GetByTitle(string title)
         {
-            string titlePath = "/title/" + title + "/title,author,lines";
-            var res = await _httpClient.GetAsync(titlePath);
-            var content = await res.Content.ReadAsStringAsync();
-            return Ok(content);
+            var content = _poetryService.GetContentFromTitle(title);
+            return Ok(content.Result);
         }
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public ActionResult<List<Poem>> GetAll() => PoemService.GetAll();
+        public ActionResult<List<Poem>> GetAll() => PoemDataService.GetAll();
 
         // POST <PoemController>
-        [HttpPost]
-        public IActionResult Create(Poem poem)
+
+        [HttpPost("{title}")]
+        public async Task<IActionResult> CreateByTitle(string title)
         {
-            PoemService.Add(poem);
-            return CreatedAtAction(nameof(Create), new { id = poem.Id }, poem);
+            var rawPoem = _poetryService.RawPoemFromTitle(title).Result;
+            PoemDataService.Add(rawPoem);
+            return CreatedAtAction(nameof(CreateByTitle), new { title = rawPoem.Title}, rawPoem);
         }
 
         // PUT <PoemController>/5
@@ -55,11 +53,11 @@ namespace PoetryAPI.Controllers
             if (id != poem.Id)
                 return BadRequest();
 
-            var existingPoem = PoemService.Get(id);
+            var existingPoem = PoemDataService.Get(id);
             if (existingPoem is null)
                 return NotFound();
 
-            PoemService.Update(poem);
+            PoemDataService.Update(poem);
 
             return NoContent();
         }
@@ -68,12 +66,12 @@ namespace PoetryAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var poem = PoemService.Get(id);
+            var poem = PoemDataService.Get(id);
 
             if (poem is null)
                 return NotFound();
 
-            PoemService.Delete(id);
+            PoemDataService.Delete(id);
 
             return NoContent();
         }

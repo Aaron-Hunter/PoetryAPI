@@ -2,11 +2,11 @@
 
 namespace PoetryAPI.Services
 {
-    public static class PoemService
+    public static class PoemDataService
     {
         static List<Poem> Poems { get; }
         static int nextId = 0;
-        static PoemService()
+        static PoemDataService()
         {
             Poems = new List<Poem>
             {
@@ -22,6 +22,13 @@ namespace PoetryAPI.Services
         public static void Add(Poem poem)
         { 
             poem.Id = nextId++;
+            Poems.Add(poem);
+        }
+
+        public static void Add(RawPoem rawPoem)
+        {
+            var poem = new Poem(rawPoem.Title, rawPoem.Author, rawPoem.Lines);
+            poem.Id = nextId++; ;
             Poems.Add(poem);
         }
 

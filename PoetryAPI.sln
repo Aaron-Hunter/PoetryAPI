@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoetryAPI", "PoetryAPI\PoetryAPI.csproj", "{A1B8682C-BA39-4465-9B79-78F4071174AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoetryAPI", "PoetryAPI\PoetryAPI.csproj", "{A1B8682C-BA39-4465-9B79-78F4071174AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest1", "UnitTest1\UnitTest1.csproj", "{28DBC7CE-C4BE-418A-96EA-EBF9D9A8CEDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A1B8682C-BA39-4465-9B79-78F4071174AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B8682C-BA39-4465-9B79-78F4071174AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B8682C-BA39-4465-9B79-78F4071174AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28DBC7CE-C4BE-418A-96EA-EBF9D9A8CEDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28DBC7CE-C4BE-418A-96EA-EBF9D9A8CEDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28DBC7CE-C4BE-418A-96EA-EBF9D9A8CEDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28DBC7CE-C4BE-418A-96EA-EBF9D9A8CEDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

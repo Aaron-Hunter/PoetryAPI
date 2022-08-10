@@ -10,3 +10,9 @@ PoetryAPI uses NUnit and NSubstitute for testing. These middleware libraries ena
 
 NUnit enables the use of Assertions which can be used to succinctly enforce requirements, such as the equality of two values, the emptyness of a string, the sameness of two references, etc. 
 NSubstitute enables the use of Substitutes which can essentially be used as a mock instance of a type. PoetryAPI usus it to create a substitute for IHttpClientFactory which is much easier than making our own mock class.
+
+### Differences between starting the project with appsettings.json vs appsettings.Development.json
+The ClientBaseUri has a different value in each file. 
+
+In appsettings.Development.json it has the valid base uri for the PoetryDB API which will result in full functionality when interacting with the API. Get requests will successfully retrieve data from the PoetryDB API using the HttpClient.
+In appsettings.json it does not have the base uri for the PoetryDB API, instead it has a placeholder valid base uri. This results in Get requests returning empty and Post requests returning Error 400. Since Post requests are not possible, Put and Delete requests will return Error 404. This essentially disables PoetryAPI while still allowing interaction with the UI.

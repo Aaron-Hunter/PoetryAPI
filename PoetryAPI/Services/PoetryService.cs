@@ -4,19 +4,28 @@ using Newtonsoft.Json.Linq;
 
 namespace PoetryAPI.Services
 {
+    /// <summary>
+    /// Manages API requests using HttpClient.
+    /// </summary>
     public class PoetryService
     {
         private readonly IHttpClientFactory _httpFactory;
-        /// <summary />
+
+        /// <summary>
+        /// Initialises a new instance of the PoetryService class.
+        /// </summary>
         public PoetryService(IHttpClientFactory clientFactory)
         {
             if (clientFactory is null)
             {
                 throw new ArgumentNullException(nameof(clientFactory));
             }
-            _httpFactory = clientFactory;//.CreateClient("poetry");
+            _httpFactory = clientFactory;
         }
 
+        /// <summary>
+        /// Queries API using HttpClient and returns the content as a string for a given title.
+        /// </summary>
         public async Task<String> GetContentFromTitle(string url, string title)
         {
             using (HttpClient httpClient = _httpFactory.CreateClient())
@@ -31,6 +40,9 @@ namespace PoetryAPI.Services
             return "";
         }
 
+        /// <summary>
+        /// Queries API using HttpClient and returns the content as a RawPoem for a given title.
+        /// </summary>
         public async Task<RawPoem> RawPoemFromTitle(string url, string title)
         {
             using (HttpClient httpClient = _httpFactory.CreateClient())

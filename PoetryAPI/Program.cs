@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddHttpClient("poetry", configureClient: client =>
 {
-    client.BaseAddress = new Uri("https://poetrydb.org/");
+    client.BaseAddress = new Uri("https://stackoverflow.com");
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

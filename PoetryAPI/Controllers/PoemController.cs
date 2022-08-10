@@ -13,10 +13,12 @@ namespace PoetryAPI.Controllers
     public class PoemController : ControllerBase
     {
         private PoetryService _poetryService;
+        private readonly IConfiguration _configuration;
         /// <summary />
-        public PoemController(IHttpClientFactory clientFactory)
+        public PoemController(IHttpClientFactory clientFactory, IConfiguration configuration)
         {
             _poetryService = new PoetryService(clientFactory);
+            _configuration = configuration;
         }
 
         // GET: <PoemController>
@@ -28,7 +30,7 @@ namespace PoetryAPI.Controllers
         [ProducesResponseType(200)]
         public async Task<IActionResult> GetByTitle(string title)
         {
-            var content = _poetryService.GetContentFromTitle(title);
+            var content = _poetryService.GetContentFromTitle(_configuration["ClientBaseUri"], title);
             return Ok(content.Result);
         }
 
@@ -41,7 +43,11 @@ namespace PoetryAPI.Controllers
         [HttpPost("{title}")]
         public async Task<IActionResult> CreateByTitle(string title)
         {
-            var rawPoem = _poetryService.RawPoemFromTitle(title).Result;
+            var rawPoem = _poetryService.RawPoemFromTitle(_configuration["ClientBaseUri"], title).Result;
+            if (rawPoem is null)
+            {
+                return BadRequest();
+            }
             PoemDataService.Add(rawPoem);
             return CreatedAtAction(nameof(CreateByTitle), new { title = rawPoem.Title}, rawPoem);
         }

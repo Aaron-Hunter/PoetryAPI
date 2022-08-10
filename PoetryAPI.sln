@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoetryAPI", "PoetryAPI\Poet
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoetryServiceTests", "PoetryServiceTests\PoetryServiceTests.csproj", "{93F6C31A-0BF7-4C53-AF3C-EDA923843319}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoemDataServiceTests", "PoemDataServiceTests\PoemDataServiceTests.csproj", "{0FB3F7D9-6C5F-4C25-9421-5B26BD8E0522}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{93F6C31A-0BF7-4C53-AF3C-EDA923843319}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93F6C31A-0BF7-4C53-AF3C-EDA923843319}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93F6C31A-0BF7-4C53-AF3C-EDA923843319}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FB3F7D9-6C5F-4C25-9421-5B26BD8E0522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FB3F7D9-6C5F-4C25-9421-5B26BD8E0522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FB3F7D9-6C5F-4C25-9421-5B26BD8E0522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FB3F7D9-6C5F-4C25-9421-5B26BD8E0522}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
